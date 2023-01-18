@@ -34,6 +34,13 @@ from math import inf
 
 from typing import cast, List, Optional
 
+from UM.Resources import Resources
+import os.path
+
+Resources.addSearchPath(
+    os.path.join(os.path.abspath(os.path.dirname(__file__)))
+)  # Plugin translation file import
+
 
 class MeasureTool(Tool):
     def __init__(self, parent=None) -> None:
@@ -49,6 +56,8 @@ class MeasureTool(Tool):
         self._dragging = False
 
         self._i18n_catalog = i18nCatalog("measuretool")
+        if self._i18n_catalog.hasTranslationLoaded():
+            Logger.log("i", "MeasureTool Plugin translation loaded!")
 
         self._points = [QVector3D(), QVector3D()]
         self._active_point = 0
